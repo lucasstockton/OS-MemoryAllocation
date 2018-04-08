@@ -29,6 +29,11 @@ public class Prototype2
     static char precedence_level3[] = { '^' }; 
      */
 
+	
+	/*
+	 * 
+	 * This is used for figuring out precedence by using a multi demensional array
+	 */
     static char precedence_level[][] = { { '0' , '1' , '2' , '3' , '4' , '5' , '6' , '7' , '8' , '9'}
         ,{ '+' , '-' }
         , { '*' , '/' }
@@ -37,6 +42,13 @@ public class Prototype2
 
     
 
+    
+    /*
+     * 
+     * This is a node structure to build a tree
+     * 
+     */
+    
 public static class Node {
  
     String value;
@@ -48,6 +60,11 @@ public static class Node {
     }
   
     
+    
+    /* Below me is the fuctions to print out the different orders
+     * 
+     * 
+     */
     
     void printPostorder(Node node)
     {
@@ -97,7 +114,10 @@ public static class Node {
     }
     
     
-    
+  /*
+   * These are wrapper functions to print out the orders
+   *   
+   */
     void printPostorder()  {     printPostorder(this);  }
     void printInorder()    {     printInorder(this);   }
     void printPreorder()   {     printPreorder(this);  }
@@ -117,7 +137,7 @@ public static class Node {
    
     private void printNodeValue(OutputStreamWriter out) throws IOException {
         
-        out.write(value);
+        out.write("(" + value + ")");
     
     out.write('\n');
 }
@@ -145,6 +165,12 @@ private void printTree(OutputStreamWriter out, boolean isRight, String indent) t
     
 }
     
+/*
+ * 
+ * I used a custom node tree to build the post fix tree
+ * 
+ */
+
     
     public static class testNode {
 
@@ -203,6 +229,11 @@ private void printTree(OutputStreamWriter out, boolean isRight, String indent) t
             }
         }   
 
+        /* 
+         * 
+         * This is just a internal test procedure to print the order of the tree node
+         */
+        
         void print()
         {
             testNode nSearch = this; 
@@ -244,7 +275,7 @@ private void printTree(OutputStreamWriter out, boolean isRight, String indent) t
         {
         	char chr = infix_input.charAt(i); 
         	
-            System.out.println("Precedence of " + chr + " is " + precedence(chr));
+          //  System.out.println("Precedence of " + chr + " is " + precedence(chr));
 
             if   (chr == '(') {
                 isNegative = true;
@@ -381,35 +412,124 @@ private void printTree(OutputStreamWriter out, boolean isRight, String indent) t
  
         // return t;
         
-        postNode.print();
+    //    postNode.print();
         
         
-        OutputStreamWriter a = new OutputStreamWriter(System.out);
-        try
+        boolean _run = true;
+        
+        while (_run)
         {
+        	
+        	System.out.println("Make your selection below\n 1) Print Tree\n 2) Inorder \n 3) Pre order \n 4) Post order\n 5) Quit\n\n\nCommand>");
+        	
+ //       	System.in.readln()
+        	
+//       String whats = 	scan.nextLine();
+  //      	int _input = 
+        
+        	
+        switch (scan.nextInt())
+        {
+        
+        case 1 : 
+            OutputStreamWriter a = new OutputStreamWriter(System.out);
+            try
+            {
+                
+                    System.out.println("");
+            t.printTree(a);
+            	a.flush();
+         		} catch (IOException ex) {
+    			ex.printStackTrace();
+    		}     	
             
-                System.out.println("");
-        t.printTree(a);
-        	a.flush();
-     		} catch (IOException ex) {
-			ex.printStackTrace();
-		}
+            System.out.println("\n\n");
+            System.out.println("\nHit Return to continue\n");
+            scan.nextLine();
+            scan.nextLine();
+        	break;
+        	
+        case 2 :
+            System.out.println(" Inorder : ");
+            t.printInorder();      	
+            System.out.println("\n\n");
+            System.out.println("\nHit Return to continue\n");
+            scan.nextLine();
+            scan.nextLine();
+        	break;
+        case 3 :
+        	
+            System.out.println(" Preorder : "); 
+            t.printPreorder();   
+            System.out.println("\n\n");
+            System.out.println("\nHit Return to continue\n");
+            scan.nextLine();
+            scan.nextLine();
+        	break;
+        	
+        	
+        case 4 :
+        	
+            System.out.println("Post Order : ");
+            t.printPostorder();
+            System.out.println("\n\n");
+            System.out.println("\nHit Return to continue\n");
+            scan.nextLine();
+            scan.nextLine();
+        	break;
+        	
+        	
+        case 5 :
+        	_run = false;
+        	break;
+        	default : 
+        		System.out.println("Please enter some valid input!");
+        		break;
         
         
-        System.out.println("Post Order : ");
-        t.printPostorder();
-        System.out.println("");
-        System.out.println(" Inorder : ");
-        t.printInorder();
-        System.out.println("");
-        System.out.println(" Preorder : "); 
-        t.printPreorder();           
+        
+        }
+        
+ 
         
         
+
         
+        
+        }
         
     }
         
+		
+		private static int _crapulate(Node n)
+		{
+			
+			//Integer.
+			if (n.left == null && n.right == null)
+				return 	Integer.parseInt(n.value);
+			
+			String s = n.value;
+			
+			char c = s.charAt(0);
+			
+			swith (c) :
+			case '^' : _crapulate(n.left) ^ _crapulate(n.right);
+			break;
+			case '*' : _crapulate(n.left) * _crapulate(n.right);
+			break;
+			case '/' : _crapulate(n.left) / _crapulate(n.right);
+			break;
+						case '+' : _crapulate(n.left) + _crapulate(n.right);
+			break;
+						case '-' : _crapulate(n.left) - _crapulate(n.right);
+			break;
+						case '^' : _crapulate(n.left) ^ _crapulate(n.right);
+			break;
+						default: 
+			break;
+			
+		}
+		
     
     private static int precedence(char op)
     {
